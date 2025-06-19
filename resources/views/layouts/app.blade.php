@@ -14,6 +14,9 @@
         body {
             font-family: "Segoe UI", sans-serif;
             background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         .hero {
             background: linear-gradient(135deg, #007bff, #00c6ff);
@@ -31,12 +34,15 @@
         .course-card:hover {
             transform: translateY(-5px);
         }
+        main {
+            flex: 1;
+        }
+
         footer {
             padding: 20px;
             text-align: center;
             background-color: #343a40;
             color: #ccc;
-            margin-top: 40px;
         }
     </style>
 </head>

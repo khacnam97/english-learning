@@ -21,9 +21,9 @@
                             <a class="nav-link {{ request()->is('admin') ? 'active' : '' }}" href="/admin">Dashboard</a>
                         </li>
                     @else
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}" href="/dashboard">Dashboard</a>
-                        </li>
+{{--                        <li class="nav-item">--}}
+{{--                            <a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}" href="/dashboard">Dashboard</a>--}}
+{{--                        </li>--}}
                     @endif
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">

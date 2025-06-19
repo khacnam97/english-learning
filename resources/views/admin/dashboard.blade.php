@@ -1,29 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar -->
-            <div class="col-md-3 bg-light vh-100 p-3">
-                <h4 class="mb-4">Admin Panel</h4>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2">
-                        <a class="nav-link" href="#">📊 Dashboard</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a class="nav-link" href="#">👥 Manage Users</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a class="nav-link" href="#">📚 Manage Courses</a>
-                    </li>
-                    <li class="nav-item">
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button class="btn btn-outline-danger mt-3" type="submit">Logout</button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
+
 
             <!-- Main Content -->
             <div class="col-md-9 p-4">

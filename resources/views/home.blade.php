@@ -23,7 +23,7 @@
                                 <span class="badge bg-primary">{{ ucfirst($course->level) }}</span>
                             </div>
                             <div class="card-footer text-center bg-white">
-                                <a href="#" class="btn btn-outline-primary btn-sm">View Course</a>
+                                <a href="{{ route('courses.show', $course->id) }}"class="btn btn-outline-primary btn-sm">View Course</a>
                             </div>
                         </div>
                     </div>
