@@ -10,34 +10,62 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover align-middle">
         <thead class="table-dark">
         <tr>
             <th>#</th>
             <th>Title</th>
             <th>Course</th>
-            <th>Type</th>
-            <th>Actions</th>
+            <th>Files</th>
+            <th>Description</th>
+            <th style="width: 150px;">Actions</th>
         </tr>
         </thead>
         <tbody>
-        @foreach($lessons as $lesson)
+        @forelse($lessons as $lesson)
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $lesson->title }}</td>
                 <td>{{ $lesson->course->title ?? 'N/A' }}</td>
-                <td>{{ ucfirst($lesson->type) }}</td>
                 <td>
-                    <a href="{{ route('lessons.show', $lesson->id) }}" class="btn btn-info btn-sm">View</a>
-                    <a href="{{ route('lessons.edit', $lesson->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                    <form action="{{ route('lessons.destroy', $lesson->id) }}" method="POST" style="display:inline-block;">
+                    @if($lesson->video_path)
+                        <a href="{{ asset('storage/' . $lesson->video_path) }}" target="_blank" class="btn btn-sm btn-outline-primary mb-1">
+                            <i class="fas fa-video"></i> Video
+                        </a><br>
+                    @endif
+                    @if($lesson->pdf_path)
+                        <a href="{{ asset('storage/' . $lesson->pdf_path) }}" target="_blank" class="btn btn-sm btn-outline-secondary mb-1">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </a><br>
+                    @endif
+                    @if($lesson->audio_path)
+                        <a href="{{ asset('storage/' . $lesson->audio_path) }}" target="_blank" class="btn btn-sm btn-outline-success">
+                            <i class="fas fa-headphones"></i> Audio
+                        </a>
+                    @endif
+                </td>
+                <td>{{ \Illuminate\Support\Str::limit($lesson->description, 80) }}</td>
+                <td>
+                    <a href="{{ route('lessons.show', $lesson->id) }}" class="btn btn-sm btn-info">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    <a href="{{ route('lessons.edit', $lesson->id) }}" class="btn btn-sm btn-warning">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <form action="{{ route('lessons.destroy', $lesson->id) }}" method="POST" class="d-inline"
+                          onsubmit="return confirm('Are you sure?');">
                         @csrf @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Are you sure to delete this lesson?')">Delete</button>
+                        <button class="btn btn-sm btn-danger">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </form>
                 </td>
             </tr>
-        @endforeach
+        @empty
+            <tr>
+                <td colspan="6" class="text-center">No lessons found.</td>
+            </tr>
+        @endforelse
         </tbody>
     </table>
 @endsection

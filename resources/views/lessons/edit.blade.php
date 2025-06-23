@@ -3,7 +3,7 @@
 @section('content')
     <h2>Edit Lesson</h2>
 
-    <form action="{{ route('lessons.update', $lesson->id) }}" method="POST">
+    <form action="{{ route('lessons.update', $lesson->id) }}" method="POST" enctype="multipart/form-data">
         @csrf @method('PUT')
         <div class="mb-3">
             <label>Title</label>
@@ -20,16 +20,22 @@
             </select>
         </div>
         <div class="mb-3">
-            <label>Type</label>
-            <select name="type" class="form-select">
-                <option value="video" {{ $lesson->type == 'video' ? 'selected' : '' }}>Video</option>
-                <option value="pdf" {{ $lesson->type == 'pdf' ? 'selected' : '' }}>PDF</option>
-                <option value="audio" {{ $lesson->type == 'audio' ? 'selected' : '' }}>Audio</option>
-            </select>
+            <label>Video File (MP4)</label>
+            <input type="file" name="video" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label>PDF File</label>
+            <input type="file" name="pdf" class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label>Audio File (MP3)</label>
+            <input type="file" name="audio" class="form-control">
         </div>
         <div class="mb-3">
-            <label>Content</label>
-            <textarea name="content" class="form-control">{{ $lesson->content }}</textarea>
+            <label>Content URL / Description</label>
+            <textarea name="description" class="form-control">{{ $lesson->description }}</textarea>
         </div>
         <button class="btn btn-primary">Update</button>
         <a href="{{ route('lessons.index') }}" class="btn btn-secondary">Cancel</a>

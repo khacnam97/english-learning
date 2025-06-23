@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 
 class LessonController extends Controller
 {
@@ -44,12 +45,29 @@ class LessonController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'course_id' => 'required|exists:courses,id',
             'title' => 'required|string|max:255',
-            'content' => 'required|string',
+            'course_id' => 'required|exists:courses,id',
+            'video' => 'nullable|file|mimetypes:video/mp4,video/mpeg',
+            'pdf' => 'nullable|file|mimes:pdf',
+            'audio' => 'nullable|file|mimetypes:audio/mpeg,audio/mp3',
         ]);
 
-        Lesson::create($request->all());
+        $data = $request->only(['title', 'description', 'course_id']);
+
+        if ($request->hasFile('video')) {
+            $data['video_path'] = $request->file('video')->store('lessons/videos', 'public');
+        }
+
+        if ($request->hasFile('pdf')) {
+            $data['pdf_path'] = $request->file('pdf')->store('lessons/pdfs', 'public');
+        }
+
+        if ($request->hasFile('audio')) {
+            $data['audio_path'] = $request->file('audio')->store('lessons/audios', 'public');
+        }
+
+        Lesson::create($data);
+
         return redirect()->route('lessons.index')->with('success', 'Lesson created successfully.');
     }
 
@@ -88,15 +106,39 @@ class LessonController extends Controller
     public function update(Request $request, Lesson $lesson)
     {
         $request->validate([
-            'course_id' => 'required|exists:courses,id',
             'title' => 'required|string|max:255',
-            'content' => 'required|string',
+            'course_id' => 'required|exists:courses,id',
+            'video' => 'nullable|file|mimetypes:video/mp4,video/mpeg',
+            'pdf' => 'nullable|file|mimes:pdf',
+            'audio' => 'nullable|file|mimetypes:audio/mpeg,audio/mp3',
         ]);
 
-        $lesson->update($request->all());
+        $data = $request->only(['title', 'description', 'course_id']);
+
+        if ($request->hasFile('video')) {
+            if ($lesson->video_path) {
+                Storage::disk('public')->delete($lesson->video_path);
+            }
+            $data['video_path'] = $request->file('video')->store('lessons/videos', 'public');
+        }
+
+        if ($request->hasFile('pdf')) {
+            if ($lesson->pdf_path) {
+                Storage::disk('public')->delete($lesson->pdf_path);
+            }
+            $data['pdf_path'] = $request->file('pdf')->store('lessons/pdfs', 'public');
+        }
+        if ($request->hasFile('audio')) {
+            if ($lesson->audio_path) {
+                Storage::disk('public')->delete($lesson->audio_path);
+            }
+            $data['audio_path'] = $request->file('audio')->store('lessons/audios', 'public');
+        }
+
+        $lesson->update($data);
+
         return redirect()->route('lessons.index')->with('success', 'Lesson updated successfully.');
     }
-
 
     /**
      * Remove the specified resource from storage.
