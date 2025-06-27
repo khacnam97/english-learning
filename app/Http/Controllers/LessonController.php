@@ -83,6 +83,11 @@ class LessonController extends Controller
         return view('lessons.show', compact('lesson'));
     }
 
+    public function show1(Lesson $lesson)
+    {
+        return view('lessons.show1', compact('lesson'));
+    }
+
 
     /**
      * Show the form for editing the specified resource.

@@ -31,7 +31,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/courses/{id}/students', [CourseManagementController::class, 'students'])->name('admin.courses.students');
     Route::get('/courses/{id}/index', [CourseManagementController::class, 'index'])->name('admin.courses.index');
-    Route::resource('lessons', LessonController::class);
 });
 
 // Trang user
@@ -45,6 +44,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('courses', CourseController::class);
     Route::post('/courses/{id}/enroll', [EnrollmentController::class, 'enroll'])->name('courses.enroll');
     Route::post('/courses/{id}/unenroll', [EnrollmentController::class, 'unenroll'])->name('courses.unenroll');
+    Route::resource('lessons', LessonController::class);
+    Route::get('/lessons/{lesson}', [LessonController::class, 'show1'])->name('lessons.show1');
 });
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
