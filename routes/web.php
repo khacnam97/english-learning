@@ -45,7 +45,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/courses/{id}/enroll', [EnrollmentController::class, 'enroll'])->name('courses.enroll');
     Route::post('/courses/{id}/unenroll', [EnrollmentController::class, 'unenroll'])->name('courses.unenroll');
     Route::resource('lessons', LessonController::class);
-    Route::get('/lessons/{lesson}', [LessonController::class, 'show1'])->name('lessons.show1');
+    Route::get('/lessons1/{lesson}', [LessonController::class, 'show1'])->name('lessons.show1');
+    Route::get('/lessons/{lesson}', [LessonController::class, 'show'])->name('lessons.show');
 });
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
