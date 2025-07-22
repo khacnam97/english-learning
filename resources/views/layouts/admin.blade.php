@@ -78,13 +78,18 @@
                 <a class="nav-link" href="#">📊 Dashboard</a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link" href="#">👥 Manage Users</a>
+                <a class="nav-link" href="/admin">👥 Manage Users</a>
             </li>
             <li class="nav-item mb-2">
                 <a class="nav-link" href="{{ route('admin.courses.index', Auth::user()->id) }}">📚 Manage Courses</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('lessons*') ? 'active' : '' }}" href="{{ route('lessons.index') }}"><i class="fas fa-book-open me-1"></i> Lessons</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->is('categories*') ? 'active' : '' }}" href="{{ route('categories.index') }}">
+                    <i class="fas fa-tags"></i> Categories
+                </a>
             </li>
             <li class="nav-item">
                 <form method="POST" action="{{ route('logout') }}">

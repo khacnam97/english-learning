@@ -12,6 +12,19 @@
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
+        <div class="mb-3">
+            <form method="GET" action="{{ route('courses.index') }}">
+                <select name="category" onchange="this.form.submit()" class="form-select w-auto d-inline">
+                    <option value="">All Categories</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->slug }}" {{ request('category') == $category->slug ? 'selected' : '' }}>
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </form>
+        </div>
+
         <div class="row">
             @foreach($courses as $course)
                 <div class="col-md-4 mb-3">
@@ -20,6 +33,7 @@
                             <h5 class="card-title">{{ $course->title }}</h5>
                             <p>{{ Str::limit($course->description, 100) }}</p>
                             <p><strong>Level:</strong> {{ ucfirst($course->level) }}</p>
+                            <p><strong>Tag:</strong> {{$course->category->name }}</p>
 
                             {{-- Hiển thị bài học --}}
                             @if($course->lessons->count())

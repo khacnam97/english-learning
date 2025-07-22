@@ -24,6 +24,18 @@
                     <option value="advanced">Advanced</option>
                 </select>
             </div>
+            <div class="mb-3">
+                <label>Category</label>
+                <select name="category_id" class="form-select">
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}"
+                            {{ old('category_id', $course->category_id ?? '') == $category->id ? 'selected' : '' }}>
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
 
             <button type="submit" class="btn btn-success">Create</button>
         </form>

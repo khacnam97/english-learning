@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CourseManagementController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\HomeController;
@@ -31,6 +32,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/courses/{id}/students', [CourseManagementController::class, 'students'])->name('admin.courses.students');
     Route::get('/courses/{id}/index', [CourseManagementController::class, 'index'])->name('admin.courses.index');
+    Route::resource('categories', CategoryController::class);
 });
 
 // Trang user
